@@ -181,23 +181,35 @@ const OpeningEnvelopeScreen = ({ onEnter }) => {
               <PocketLineArt />
             </div>
 
-            {/* 4. Top Flap (Hinges upward) */}
+            {/* 4. Top Flap Container (Hinges upward) */}
+            {/* 
+              We separate the container from the visual flap.
+              The container handles the 3D rotation hinge, while the inner background gets the triangle clip-path.
+              This allows the wax seal to be a sibling of the background (not clipped) but still rotate with the flap!
+            */}
             <motion.div
-              className="absolute top-0 left-0 w-full rounded-t-xl"
+              className="absolute top-0 left-0 w-full"
               style={{ 
                 height: '65%', 
-                background: 'linear-gradient(160deg, #FDF9F2 0%, #F0E6CE 100%)',
-                clipPath: 'polygon(0 0, 100% 0, 50% 100%)', // Triangle flap
                 transformOrigin: 'top center',
                 zIndex: 20,
-                boxShadow: '0 4px 15px rgba(0,0,0,0.08)' // Soft drop shadow below flap
               }}
-              animate={isEnvelopeOpen ? { rotateX: -180, opacity: 0 } : { rotateX: 0, opacity: 1 }}
+              animate={isEnvelopeOpen ? { rotateX: -180, opacity: 0.95 } : { rotateX: 0, opacity: 1 }}
               transition={{ duration: 1, ease: [0.4, 0, 0.1, 1] }}
             >
-              <FlapLineArt />
+              {/* Visual Triangle Flap (Clipped) */}
+              <div 
+                className="absolute inset-0 rounded-t-xl" 
+                style={{ 
+                  background: 'linear-gradient(160deg, #FDF9F2 0%, #F0E6CE 100%)',
+                  clipPath: 'polygon(0 0, 100% 0, 50% 100%)',
+                  boxShadow: '0 4px 15px rgba(0,0,0,0.08)' // Soft drop shadow below flap
+                }}
+              >
+                <FlapLineArt />
+              </div>
               
-              {/* Wax Seal (Attached to the tip of the flap) */}
+              {/* Wax Seal (Attached to the tip of the flap, outside the clip-path) */}
               <AnimatePresence>
                 {phase === 'idle' && (
                   <motion.div
