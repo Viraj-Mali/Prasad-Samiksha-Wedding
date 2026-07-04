@@ -1,0 +1,205 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&family=Inter:wght@300;400;500;600&family=Lora:ital,wght@0,400;0,500;1,400&family=Noto+Sans+Devanagari:wght@400;500;600&family=Tiro+Devanagari+Marathi:ital@0;1&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-sage:          #8FAF8F;
+  --color-sage-light:    #B8CDB8;
+  --color-sage-pale:     #EDF2ED;
+  --color-sage-mid:      #7A9E7A;
+  --color-sage-dark:     #5E8065;
+  --color-ivory:         #FAF7F0;
+  --color-cream:         #FDF9F2;
+  --color-gold:          #C9A84C;
+  --color-gold-light:    #E8C97A;
+  --color-gold-pale:     #F5E6B8;
+  --color-gold-dark:     #A07830;
+  --color-gold-deep:     #7A5820;
+  --color-maroon:        #7B2D2D;
+  --color-maroon-light:  #B85C5C;
+  --color-choco:         #2C1810;
+  --color-choco-mid:     #4A2C1A;
+
+  --font-serif:    "Playfair Display", "Cormorant Garamond", Georgia, serif;
+  --font-garamond: "Cormorant Garamond", Georgia, serif;
+  --font-sans:     "Inter", system-ui, sans-serif;
+  --font-lora:     "Lora", Georgia, serif;
+}
+
+/* ─── Base Reset ────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+html, body {
+  margin: 0; padding: 0; overflow-x: hidden;
+  scroll-behavior: smooth;
+  background: var(--color-sage-pale);
+  color: var(--color-choco);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─── Typography Helpers ────────────────────── */
+.font-serif    { font-family: var(--font-serif); }
+.font-garamond { font-family: var(--font-garamond); }
+.font-lora     { font-family: var(--font-lora); }
+
+/* ─── Premium Text Gradients ────────────────── */
+.text-gold-grad {
+  background: linear-gradient(135deg, #A07830 0%, #C9A84C 30%, #E8C97A 50%, #C9A84C 80%, #A07830 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.text-maroon-grad {
+  background: linear-gradient(135deg, #7B2D2D 0%, #B85C5C 50%, #7B2D2D 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ═══════════════════════════════════════════════
+   3D ENVELOPE STYLING
+═══════════════════════════════════════════════ */
+/* Outer body giving realistic depth */
+.env-3d-body {
+  background: linear-gradient(155deg, #FAF7F0 0%, #F5F0E5 40%, #EAE0C8 100%);
+  border-radius: 12px;
+  box-shadow: 
+    0 40px 100px -10px rgba(44,24,16,0.35), 
+    0 10px 40px -5px rgba(201,168,76,0.2),
+    inset 0 2px 4px rgba(255,255,255,0.9),
+    inset 0 -4px 10px rgba(120,80,20,0.15);
+  position: relative;
+  overflow: visible; /* Let the flap hinge cleanly */
+}
+/* Flap giving realistic hinge and lip */
+.env-3d-flap {
+  transform-origin: top center;
+  background: linear-gradient(160deg, #F5F0E5 0%, #E5DAC0 100%);
+  border-radius: 12px 12px 4px 4px;
+  box-shadow: 
+    inset 0 1px 2px rgba(255,255,255,0.7),
+    0 10px 20px -5px rgba(44,24,16,0.25);
+  position: relative;
+  z-index: 30;
+}
+.env-3d-flap::after {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.8), transparent);
+}
+
+/* Huge Wax Seal */
+.env-seal-3d {
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 25%, #F5E6B8 0%, #C9A84C 35%, #A07830 70%, #5C4010 100%);
+  box-shadow: 
+    0 12px 30px rgba(60,30,0,0.5),
+    inset 0 4px 12px rgba(255,230,120,0.5),
+    inset 0 -4px 10px rgba(40,20,0,0.4);
+  position: relative;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; border: none; outline: none;
+}
+.env-seal-3d:active { transform: scale(0.95); }
+.seal-breathe {
+  animation: sealGlowPulse 3.5s ease-in-out infinite;
+}
+@keyframes sealGlowPulse {
+  0%, 100% {
+    box-shadow: 
+      0 12px 30px rgba(60,30,0,0.5),
+      inset 0 4px 12px rgba(255,230,120,0.5),
+      inset 0 -4px 10px rgba(40,20,0,0.4),
+      0 0 0 0 rgba(201,168,76,0.4);
+  }
+  50% {
+    box-shadow: 
+      0 16px 40px rgba(60,30,0,0.6),
+      inset 0 4px 12px rgba(255,230,120,0.5),
+      inset 0 -4px 10px rgba(40,20,0,0.4),
+      0 0 0 25px rgba(201,168,76,0);
+  }
+}
+
+/* ═══════════════════════════════════════════════
+   POSTER CARD STYLING (Themed)
+═══════════════════════════════════════════════ */
+.poster-card {
+  border-radius: 20px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 
+    0 24px 60px rgba(44,24,16,0.18),
+    0 4px 12px rgba(44,24,16,0.08);
+}
+/* Haldi Theme Watercolor */
+.theme-haldi {
+  background: 
+    radial-gradient(ellipse at top left, rgba(255,200,80,0.3) 0%, transparent 60%),
+    radial-gradient(ellipse at bottom right, rgba(255,140,40,0.25) 0%, transparent 60%),
+    #FFF8E7; /* Warm watercolor paper base */
+}
+/* Wedding Theme Texture */
+.theme-wedding {
+  background: 
+    radial-gradient(ellipse at 50% 50%, rgba(201,168,76,0.08) 0%, transparent 70%),
+    #FAF7F0; /* Cream paper base */
+}
+
+/* Glassmorphism Panel */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.04);
+}
+
+/* Pill strips */
+.info-pill {
+  background: rgba(255,255,255,0.85);
+  border: 1px solid rgba(201,168,76,0.3);
+  border-radius: 40px;
+  padding: 6px 16px;
+  display: inline-flex; align-items: center; justify-content: center;
+  gap: 6px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+}
+
+/* ═══════════════════════════════════════════════
+   MOTION & PARTICLES
+═══════════════════════════════════════════════ */
+@keyframes slowDrift {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  33% { transform: translate(15px, -15px) rotate(10deg); }
+  66% { transform: translate(-10px, 10px) rotate(-5deg); }
+}
+@keyframes flutterWing {
+  0%, 100% { transform: scaleX(1); }
+  50% { transform: scaleX(0.4); }
+}
+@keyframes floatUp {
+  0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+  10% { opacity: 0.8; }
+  90% { opacity: 0.6; }
+  100% { transform: translateY(-20vh) rotate(360deg); opacity: 0; }
+}
+@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.anim-drift { animation: slowDrift 8s ease-in-out infinite; }
+.anim-flutter { animation: flutterWing 0.3s ease-in-out infinite; }
+
+/* ─── Scrollbar ───────────────────────────────── */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: #EDF2ED; }
+::-webkit-scrollbar-thumb { background: var(--color-gold); border-radius: 4px; }
+
+/* ─── Reduced motion ──────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
