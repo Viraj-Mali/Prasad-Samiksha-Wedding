@@ -215,12 +215,12 @@ const OpeningEnvelopeScreen = ({ onEnter }) => {
                   <motion.div
                     exit={{ opacity: 0, scale: 1.2, filter: 'blur(4px)' }}
                     transition={{ duration: 0.5 }}
-                    style={{ position: 'absolute', bottom: -45, left: '50%', transform: 'translateX(-50%)' }}
+                    style={{ position: 'absolute', bottom: -55, left: '50%', transform: 'translateX(-50%)' }}
                   >
                     <button 
                       onClick={handleClick}
                       style={{ 
-                        width: 90, height: 90, borderRadius: '50%', cursor: 'pointer', border: 'none',
+                        width: 110, height: 110, borderRadius: '50%', cursor: 'pointer', border: 'none',
                         background: 'radial-gradient(circle at 35% 35%, #F5E6B8 0%, #C9A84C 40%, #8A6420 100%)',
                         boxShadow: '0 6px 16px rgba(100,60,10,0.3), inset 0 2px 6px rgba(255,255,255,0.4)',
                         display: 'flex', alignItems: 'center', justifyContent: 'center',
@@ -229,10 +229,10 @@ const OpeningEnvelopeScreen = ({ onEnter }) => {
                     >
                       <span style={{
                         fontFamily: 'var(--font-garamond)', color: '#FFF',
-                        fontSize: 26, fontWeight: 400, letterSpacing: '0.02em',
+                        fontSize: 32, fontWeight: 400, letterSpacing: '0.02em',
                         textShadow: '0 2px 6px rgba(80,40,0,0.6)'
                       }}>
-                        P <span style={{ fontSize: 14, color: 'rgba(255,255,255,0.8)' }}>&amp;</span> S
+                        P <span style={{ fontSize: 16, color: 'rgba(255,255,255,0.8)' }}>&amp;</span> S
                       </span>
                     </button>
                   </motion.div>
