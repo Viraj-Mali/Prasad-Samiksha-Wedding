@@ -11,6 +11,17 @@ const HaldiBorder = () => (
   </svg>
 );
 
+const MehendiBorder = () => (
+  <svg viewBox="0 0 100 100" preserveAspectRatio="none" className="absolute inset-0 w-full h-full pointer-events-none opacity-70">
+    <rect x="4" y="4" width="92" height="92" rx="3" stroke="#43AA8B" strokeWidth="0.6" fill="none"/>
+    <path d="M4 15 Q15 15 15 4 M85 4 Q85 15 96 15 M96 85 Q85 85 85 96 M15 96 Q15 85 4 85" stroke="#43AA8B" strokeWidth="0.8" fill="none"/>
+    <circle cx="9" cy="9" r="1.5" fill="#43AA8B"/>
+    <circle cx="91" cy="9" r="1.5" fill="#43AA8B"/>
+    <circle cx="9" cy="91" r="1.5" fill="#43AA8B"/>
+    <circle cx="91" cy="91" r="1.5" fill="#43AA8B"/>
+  </svg>
+);
+
 const WeddingBorder = () => (
   <svg viewBox="0 0 100 100" preserveAspectRatio="none" className="absolute inset-0 w-full h-full pointer-events-none opacity-80">
     <rect x="4" y="4" width="92" height="92" rx="4" stroke="#A07830" strokeWidth="0.8" fill="none"/>
@@ -30,13 +41,16 @@ const FloralMotif = ({ color, style }) => (
 /* ── Event Poster Component ── */
 const EventPoster = ({ event, index }) => {
   const isHaldi = event.id === 'haldi';
+  const isMehendi = event.id === 'mehendi';
+  const isWedding = event.id === 'wedding';
+  const [imgError, setImgError] = React.useState(false);
   
   // Theme Variables
-  const themeClass = isHaldi ? 'theme-haldi' : 'theme-wedding';
-  const textColor = isHaldi ? '#5C4010' : '#4A2C1A';
-  const accentColor = isHaldi ? '#A07830' : '#7B2D2D';
-  const hashtag = isHaldi ? '#AuraOfYellow' : '#PrasadSamikshaWedding';
-  const subtitle = isHaldi ? "A splash of yellow, a touch of love" : "Where traditions meet eternal love";
+  const themeClass = isHaldi ? 'theme-haldi' : isMehendi ? 'theme-mehendi' : 'theme-wedding';
+  const textColor = isHaldi ? '#5C4010' : isMehendi ? '#2D5A40' : '#4A2C1A';
+  const accentColor = isHaldi ? '#A07830' : isMehendi ? '#43AA8B' : '#7B2D2D';
+  const hashtag = isHaldi ? '#AuraOfYellow' : isMehendi ? '#PrasadSamikshaMehendi' : '#PrasadSamikshaWedding';
+  const subtitle = isHaldi ? "A splash of yellow, a touch of love" : isMehendi ? "Filled with colors, joy, and the fragrance of mehendi." : "Where traditions meet eternal love";
   
   return (
     <motion.div
@@ -53,9 +67,12 @@ const EventPoster = ({ event, index }) => {
       }}
     >
       {/* Borders & Decorations */}
-      {isHaldi ? <HaldiBorder /> : <WeddingBorder />}
-      {isHaldi && <FloralMotif color="#E8C97A" style={{ top: 16, left: 16 }} />}
-      {isHaldi && <FloralMotif color="#E8C97A" style={{ top: 16, right: 16, transform: 'scaleX(-1)' }} />}
+      {isHaldi && <HaldiBorder />}
+      {isMehendi && <MehendiBorder />}
+      {isWedding && <WeddingBorder />}
+
+      {(isHaldi || isMehendi) && <FloralMotif color={isHaldi ? "#E8C97A" : "#68B093"} style={{ top: 16, left: 16 }} />}
+      {(isHaldi || isMehendi) && <FloralMotif color={isHaldi ? "#E8C97A" : "#68B093"} style={{ top: 16, right: 16, transform: 'scaleX(-1)' }} />}
       
       {/* Top Monogram/Logo */}
       <div style={{
@@ -118,20 +135,29 @@ const EventPoster = ({ event, index }) => {
       <span className="anim-flutter absolute" style={{ fontSize: 20, top: '45%', right: '10%', zIndex: 20 }}>🦋</span>
       
       {/* Illustration Area (Bottom) */}
-      <div className="mt-auto pt-16 flex flex-col items-center justify-end relative z-10 w-full" style={{ minHeight: 200 }}>
-        {/* Placeholder for the illustrated couple art */}
-        <div style={{
-          width: '70%', height: 160,
-          border: `2px dashed ${accentColor}40`,
-          borderRadius: '16px 16px 0 0',
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
-          background: 'rgba(255,255,255,0.3)',
-          textAlign: 'center', padding: 16
-        }}>
-          <p style={{ fontFamily: 'var(--font-lora)', fontStyle: 'italic', color: accentColor, fontSize: '0.9rem' }}>
-            Couple Illustration<br/>Placeholder
-          </p>
-        </div>
+      <div className="event-illustration-wrapper mt-auto pt-16 flex flex-col items-center justify-end relative z-10 w-full" style={{ minHeight: 200 }}>
+        {event.illustration && !imgError ? (
+          <img 
+            src={event.illustration} 
+            alt={event.title}
+            className="event-illustration"
+            loading="lazy"
+            onError={() => setImgError(true)}
+          />
+        ) : (
+          <div style={{
+            width: '70%', height: 160,
+            border: `2px dashed ${accentColor}40`,
+            borderRadius: '16px 16px 0 0',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            background: 'transparent',
+            textAlign: 'center', padding: 16
+          }}>
+            <p style={{ fontFamily: 'var(--font-lora)', fontStyle: 'italic', color: accentColor, fontSize: '0.9rem' }}>
+              🌸<br/>Floral/Couple<br/>Placeholder
+            </p>
+          </div>
+        )}
       </div>
 
     </motion.div>

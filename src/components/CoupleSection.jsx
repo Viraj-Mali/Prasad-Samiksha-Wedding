@@ -15,7 +15,7 @@ const InitialsPlaceholder = ({ initial, color = 'var(--color-sage)' }) => (
   </div>
 );
 
-const ProfileCard = ({ name, qualification, address, initial, photo, side }) => {
+const ProfileCard = ({ name, qualification, parents, address, initial, photo, side }) => {
   const isLeft = side === 'groom';
   return (
     <motion.div
@@ -42,20 +42,27 @@ const ProfileCard = ({ name, qualification, address, initial, photo, side }) => 
         {name}
       </h3>
 
-      {/* Gold divider */}
-      <div className="flex items-center gap-2 my-3 w-24">
-        <div className="flex-1 h-px" style={{ background: 'var(--color-gold)' }}/>
-        <span className="text-xs" style={{ color: 'var(--color-gold)' }}>✦</span>
-        <div className="flex-1 h-px" style={{ background: 'var(--color-gold)' }}/>
-      </div>
-
       {/* Qualification */}
       <p className="font-lora italic text-sm mb-3" style={{ color: 'var(--color-sage)' }}>
         {qualification}
       </p>
 
+      {/* Gold divider */}
+      <div className="flex items-center gap-2 my-2 w-24">
+        <div className="flex-1 h-px" style={{ background: 'var(--color-gold)' }}/>
+        <span className="text-xs" style={{ color: 'var(--color-gold)' }}>✦</span>
+        <div className="flex-1 h-px" style={{ background: 'var(--color-gold)' }}/>
+      </div>
+
+      {/* Parents */}
+      {parents && (
+        <p className="font-lora text-xs sm:text-[13px] leading-relaxed mb-3 mt-1 px-2" style={{ color: 'rgba(44,24,16,0.7)', fontStyle: 'italic' }}>
+          {parents}
+        </p>
+      )}
+
       {/* Address */}
-      <p className="font-lora text-sm leading-relaxed" style={{ color: 'rgba(44,24,16,0.6)' }}>
+      <p className="font-lora text-xs leading-relaxed opacity-70" style={{ color: 'rgba(44,24,16,0.6)' }}>
         {address}
       </p>
     </motion.div>
@@ -97,6 +104,7 @@ const CoupleSection = () => {
         <ProfileCard
           name={couple.groomName}
           qualification={couple.groomQualification}
+          parents={couple.groomParents}
           address={couple.groomAddress}
           initial="P"
           photo={couple.groomPhoto || weddingData.assets.groomPhoto}
@@ -105,6 +113,7 @@ const CoupleSection = () => {
         <ProfileCard
           name={couple.brideName}
           qualification={couple.brideQualification}
+          parents={couple.brideParents}
           address={couple.brideAddress}
           initial="S"
           photo={couple.bridePhoto || weddingData.assets.bridePhoto}

@@ -1,11 +1,29 @@
 /**
- * MARATHI WEDDING DATA — PLACEHOLDER
+ * MARATHI WEDDING DATA
  *
- * TODO: Marathi content will be manually verified and added later.
- * DO NOT auto-translate from English. All Marathi text must be
- * reviewed and approved by the family before publishing.
- *
- * This file is intentionally left empty / placeholder.
+ * family: {
+    heading: "निमंत्रक",
+    mainLine: "गोडगे पाटील परिवार व नातेवाईक",
+    members: [
+      { name: "श्री. बाबासाहेब भिकारी पा. गोडगे", phone: "" },
+      { name: "श्री. संजय भिकारी पा. गोडगे", phone: "" },
+      { name: "श्री. आण्णासाहेब भिकारी पा. गोडगे", phone: "" },
+      { name: "श्री. बाबुराव भिकारी पा. गोडगे", phone: "" },
+      { name: "चि. ओंकार संजय गोडगे", phone: "" },
+    ],
+  },
  */
 
-export const weddingDataMr = null;
+export const weddingDataMr = {
+  family: {
+    heading: "निमंत्रक",
+    mainLine: "गोडगे पाटील परिवार व नातेवाईक",
+    members: [
+      { name: "श्री. बाबासाहेब भिकारी पा. गोडगे", phone: "" },
+      { name: "श्री. संजय भिकारी पा. गोडगे", phone: "" },
+      { name: "श्री. आण्णासाहेब भिकारी पा. गोडगे", phone: "" },
+      { name: "श्री. बाबुराव भिकारी पा. गोडगे", phone: "" },
+      { name: "चि. ओंकार संजय गोडगे", phone: "" },
+    ],
+  },
+};

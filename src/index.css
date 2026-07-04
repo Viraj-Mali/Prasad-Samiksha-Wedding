@@ -137,11 +137,18 @@ html, body {
     radial-gradient(ellipse at bottom right, rgba(255,140,40,0.25) 0%, transparent 60%),
     #FFF8E7; /* Warm watercolor paper base */
 }
+/* Mehendi Theme Watercolor */
+.theme-mehendi {
+  background: 
+    radial-gradient(ellipse at top left, rgba(144,190,109,0.3) 0%, transparent 60%),
+    radial-gradient(ellipse at bottom right, rgba(67,170,139,0.25) 0%, transparent 60%),
+    #F3F8F2; /* Soft green watercolor paper base */
+}
 /* Wedding Theme Texture */
 .theme-wedding {
   background: 
-    radial-gradient(ellipse at 50% 50%, rgba(201,168,76,0.08) 0%, transparent 70%),
-    #FAF7F0; /* Cream paper base */
+    radial-gradient(ellipse at top center, rgba(255,250,240,0.8) 0%, transparent 70%),
+    #EADBC8; /* Classic cream/maroon base */
 }
 
 /* Glassmorphism Panel */
@@ -177,11 +184,31 @@ html, body {
   0%, 100% { transform: scaleX(1); }
   50% { transform: scaleX(0.4); }
 }
-@keyframes floatUp {
-  0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
-  10% { opacity: 0.8; }
-  90% { opacity: 0.6; }
-  100% { transform: translateY(-20vh) rotate(360deg); opacity: 0; }
+@keyframes fallDown {
+  0% {
+    transform: translate3d(var(--start-x), -12vh, 0) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: var(--opacity);
+  }
+  100% {
+    transform: translate3d(var(--end-x), 112dvh, 0) rotate(var(--rotate));
+    opacity: 0;
+  }
+}
+
+.particle {
+  position: fixed;
+  top: 0;
+  left: var(--left);
+  animation-name: fallDown;
+  animation-duration: var(--duration);
+  animation-delay: var(--delay);
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  will-change: transform;
+  pointer-events: none;
 }
 @keyframes fadeSlideUp {
   from { opacity: 0; transform: translateY(40px); }
@@ -202,4 +229,29 @@ html, body {
     animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
   }
+
+  .particle {
+    animation-duration: 40s !important;
+    opacity: 0.35 !important;
+  }
+
+  .scroll-reveal,
+  .photo-card {
+    animation: none !important;
+    transform: none !important;
+  }
+}
+
+/* Event Illustrations */
+.event-illustration {
+  display: block;
+  width: min(78%, 380px);
+  height: auto;
+  object-fit: contain;
+  margin: 0 auto;
+  background: transparent;
+}
+
+.event-illustration-wrapper {
+  background: transparent;
 }

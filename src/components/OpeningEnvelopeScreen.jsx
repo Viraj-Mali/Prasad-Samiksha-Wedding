@@ -6,25 +6,47 @@ import { weddingData } from '../data/index.js';
    BACKGROUND & PARTICLES
 ═══════════════════════════════════════════════════════ */
 const MagicalParticles = ({ isMobile }) => {
-  const particles = [
-    { e: '🌸', l: '10%', dur: 14, del: 0, sz: 16 },
-    { e: '🦋', l: '20%', dur: 18, del: 4, sz: 14, flutter: true },
-    { e: '🍃', l: '35%', dur: 16, del: 2, sz: 14 },
-    { e: '✨', l: '50%', dur: 10, del: 6, sz: 10 },
-    { e: '🌸', l: '70%', dur: 15, del: 1, sz: 18 },
-    { e: '🦋', l: '85%', dur: 17, del: 5, sz: 15, flutter: true },
-    { e: '🌿', l: '90%', dur: 13, del: 3, sz: 14 },
-  ];
-  const activeParticles = isMobile ? particles.filter((_,i) => i%2===0) : particles;
+  const particleCount = isMobile ? 8 : 16;
+  const elements = ['🌸', '🦋', '🍃', '✨', '🌿'];
+  
+  const particles = React.useMemo(() => {
+    return Array.from({ length: particleCount }).map((_, i) => {
+      // Base duration: 18-30s for desktop, 22-36s for mobile
+      const baseDuration = isMobile ? 22 : 18;
+      const durationRange = isMobile ? 14 : 12;
+      
+      return {
+        id: i,
+        e: elements[Math.floor(Math.random() * elements.length)],
+        left: `${Math.random() * 100}vw`,
+        startX: `${(Math.random() - 0.5) * 50}px`,
+        endX: `${(Math.random() - 0.5) * 150}px`, // Slight horizontal drift
+        duration: `${baseDuration + Math.random() * durationRange}s`,
+        delay: `${Math.random() * 10}s`,
+        opacity: 0.4 + Math.random() * 0.4,
+        rotate: `${(Math.random() - 0.5) * 360}deg`,
+        sz: 10 + Math.random() * 14
+      };
+    });
+  }, [isMobile]);
   
   return (
     <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
-      {activeParticles.map((p, i) => (
-        <span key={i} className={p.flutter ? 'anim-flutter' : ''} style={{
-          position: 'absolute', left: p.l, bottom: '-30px',
-          fontSize: p.sz, userSelect: 'none', opacity: 0.6,
-          animation: `floatUp ${p.dur}s ${p.del}s linear infinite, slowDrift ${p.dur*0.7}s ease-in-out infinite`,
-        }}>
+      {particles.map((p) => (
+        <span 
+          key={p.id} 
+          className="particle" 
+          style={{
+            '--left': p.left,
+            '--start-x': p.startX,
+            '--end-x': p.endX,
+            '--duration': p.duration,
+            '--delay': p.delay,
+            '--opacity': p.opacity,
+            '--rotate': p.rotate,
+            fontSize: p.sz
+          }}
+        >
           {p.e}
         </span>
       ))}
@@ -118,8 +140,15 @@ const OpeningEnvelopeScreen = ({ onEnter }) => {
           <motion.div
             initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 1.2, ease: "easeOut" }}
-            className="text-center mb-10 relative z-10"
+            className="text-center mb-10 relative z-10 flex flex-col items-center"
           >
+            {weddingData.assets.ganpatiImage && (
+              <img 
+                src={weddingData.assets.ganpatiImage} 
+                alt="Shree Ganeshay Namah" 
+                style={{ width: 72, height: 72, objectFit: 'contain', marginBottom: 16, opacity: 0.9 }} 
+              />
+            )}
             <p style={{ fontFamily: 'var(--font-lora)', color: 'rgba(255,255,255,0.85)',
               fontSize: 10, letterSpacing: '0.4em', textTransform: 'uppercase', marginBottom: 12 }}>
               {weddingData.wedding.blessing}

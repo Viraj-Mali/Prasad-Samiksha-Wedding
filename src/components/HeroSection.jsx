@@ -61,20 +61,24 @@ const HeroSection = () => {
 
       {/* Main Card */}
       <motion.div
-        variants={container} initial="hidden" whileInView="visible"
-        viewport={{ once: true, margin: '-100px' }}
-        className="inv-card max-w-lg w-full mx-auto text-center relative z-10"
-        style={{ padding: 'clamp(2.5rem, 7vw, 4rem) clamp(1.8rem, 5vw, 3.5rem)' }}
+        variants={container} initial="hidden" animate="visible"
+        className="relative z-10 w-full max-w-lg mx-auto flex flex-col items-center justify-center p-8 bg-glass shadow-glass rounded-2xl text-center"
       >
         {/* Inner small ornament corners */}
-        <OrnCorner style={{ top: 6, left: 6, width: 44, height: 44, opacity: 0.5 }} />
-        <OrnCorner style={{ top: 6, right: 6, width: 44, height: 44, opacity: 0.5, transform: 'scaleX(-1)' }} />
-        <OrnCorner style={{ bottom: 6, left: 6, width: 44, height: 44, opacity: 0.5, transform: 'scaleY(-1)' }} />
-        <OrnCorner style={{ bottom: 6, right: 6, width: 44, height: 44, opacity: 0.5, transform: 'scale(-1,-1)' }} />
+        <OrnCorner style={{ top: 8, left: 8, width: 40, height: 40, opacity: 0.5 }} />
+        <OrnCorner style={{ top: 8, right: 8, transform: 'scaleX(-1)', width: 40, height: 40, opacity: 0.5 }} />
+        <OrnCorner style={{ bottom: 8, left: 8, transform: 'scaleY(-1)', width: 40, height: 40, opacity: 0.5 }} />
+        <OrnCorner style={{ bottom: 8, right: 8, transform: 'scale(-1,-1)', width: 40, height: 40, opacity: 0.5 }} />
 
         {/* Top Blessing */}
-        <motion.div variants={item} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: 16 }}>
-          <span style={{ fontSize: 18, color: 'rgba(201,168,76,0.6)', marginBottom: 12 }}>🌸</span>
+        <motion.div variants={item} className="mb-8 mt-4 flex flex-col items-center">
+          {weddingData.assets.ganpatiImage && (
+            <img 
+              src={weddingData.assets.ganpatiImage} 
+              alt="Shree Ganeshay Namah" 
+              style={{ width: 84, height: 84, objectFit: 'contain', marginBottom: 20, opacity: 0.9 }} 
+            />
+          )}
           <p style={{ fontFamily: 'var(--font-lora)', color: 'var(--color-gold-deep)',
             fontSize: 11, letterSpacing: '0.38em', textTransform: 'uppercase' }}>
             {wedding.blessing}
