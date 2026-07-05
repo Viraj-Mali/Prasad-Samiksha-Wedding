@@ -30,15 +30,21 @@ function App() {
       audioRef.current.loop = true;
       audioRef.current.volume = 0.45;
     } catch {
-      // Music file may not exist — that's OK
+      // Music file may not exist
     }
 
     const audio = audioRef.current;
     if (!audio) return;
 
+    // Native event listeners to keep state perfectly in sync
+    const onPlay = () => setIsPlaying(true);
+    const onPause = () => setIsPlaying(false);
+    
+    audio.addEventListener('play', onPlay);
+    audio.addEventListener('pause', onPause);
+
     const pauseMusic = () => {
       audio.pause();
-      setIsPlaying(false);
     };
 
     const handleVisibilityChange = () => {
@@ -49,7 +55,6 @@ function App() {
 
     const handlePageHide = () => {
       pauseMusic();
-      audio.currentTime = 0;
     };
 
     document.addEventListener("visibilitychange", handleVisibilityChange);
@@ -60,6 +65,9 @@ function App() {
       document.removeEventListener("visibilitychange", handleVisibilityChange);
       window.removeEventListener("pagehide", handlePageHide);
       window.removeEventListener("beforeunload", handlePageHide);
+      audio.removeEventListener('play', onPlay);
+      audio.removeEventListener('pause', onPause);
+      
       if (audio) {
         audio.pause();
       }
@@ -71,12 +79,12 @@ function App() {
     setEntered(true);
     // Try to start music
     if (audioRef.current) {
-      audioRef.current.play()
-        .then(() => setIsPlaying(true))
-        .catch(() => {
+      const playPromise = audioRef.current.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(() => {
           // Autoplay blocked or file missing — silently ignore
-          setIsPlaying(false);
         });
+      }
     }
   };
 
@@ -84,11 +92,11 @@ function App() {
     if (!audioRef.current) return;
     if (isPlaying) {
       audioRef.current.pause();
-      setIsPlaying(false);
     } else {
-      audioRef.current.play()
-        .then(() => setIsPlaying(true))
-        .catch(() => {});
+      const playPromise = audioRef.current.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(() => {});
+      }
     }
   };
 
