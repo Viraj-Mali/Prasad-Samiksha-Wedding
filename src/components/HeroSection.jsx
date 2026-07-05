@@ -150,25 +150,7 @@ const HeroSection = () => {
           <span style={{ color: 'var(--color-gold)', fontSize: 14 }}>✦</span>
         </motion.div>
 
-        {/* CTA Button */}
-        <motion.div variants={item}>
-          <button
-            onClick={() => document.getElementById('events')?.scrollIntoView({ behavior: 'smooth' })}
-            style={{
-              background: 'linear-gradient(135deg, var(--color-gold-deep) 0%, var(--color-gold) 50%, var(--color-gold-light) 100%)',
-              color: '#FFF', border: 'none',
-              padding: '14px 36px', borderRadius: 50,
-              fontFamily: 'var(--font-lora)', fontStyle: 'italic',
-              fontSize: 15, cursor: 'pointer',
-              boxShadow: '0 6px 24px rgba(120,80,20,0.3)',
-              transition: 'transform 0.25s ease, box-shadow 0.25s ease',
-            }}
-            onMouseEnter={e => { e.currentTarget.style.transform='translateY(-3px)'; e.currentTarget.style.boxShadow='0 10px 32px rgba(120,80,20,0.4)'; }}
-            onMouseLeave={e => { e.currentTarget.style.transform=''; e.currentTarget.style.boxShadow='0 6px 24px rgba(120,80,20,0.3)'; }}
-          >
-            View Wedding Details ↓
-          </button>
-        </motion.div>
+
       </motion.div>
 
     </section>
