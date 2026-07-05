@@ -99,7 +99,7 @@ export const weddingData = {
     groomPhoto: "/images/Groom_photo.png",
     bridePhoto: "/images/Bride_photo.png",
     galleryImages: [
-      "/images/couple_photo1.jpeg",
+      "/images/Couple_photo1.jpeg",
       "/images/Couple_photo4.jpeg",
       "/images/Couple_photo3.jpeg",
       "/images/Couple_photo2.jpeg",
