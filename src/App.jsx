@@ -32,11 +32,38 @@ function App() {
     } catch {
       // Music file may not exist — that's OK
     }
-    return () => {
-      if (audioRef.current) {
-        audioRef.current.pause();
-        audioRef.current = null;
+
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    const pauseMusic = () => {
+      audio.pause();
+      setIsPlaying(false);
+    };
+
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        pauseMusic();
       }
+    };
+
+    const handlePageHide = () => {
+      pauseMusic();
+      audio.currentTime = 0;
+    };
+
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    window.addEventListener("pagehide", handlePageHide);
+    window.addEventListener("beforeunload", handlePageHide);
+
+    return () => {
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+      window.removeEventListener("pagehide", handlePageHide);
+      window.removeEventListener("beforeunload", handlePageHide);
+      if (audio) {
+        audio.pause();
+      }
+      audioRef.current = null;
     };
   }, []);
 
