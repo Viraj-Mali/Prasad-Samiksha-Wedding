@@ -118,7 +118,7 @@ const PhotoStack = () => {
     <section 
       className="pt-24 px-4 overflow-hidden relative" 
       style={{ 
-        background: 'linear-gradient(180deg, #FDF9F2 0%, #E8EFE8 100%)',
+        background: 'transparent',
         paddingBottom: '200px' // Increased padding so trailing cards and floating buttons never overlap
       }}
     >
