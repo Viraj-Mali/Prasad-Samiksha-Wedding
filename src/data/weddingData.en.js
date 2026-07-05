@@ -10,7 +10,7 @@ export const weddingData = {
     groomName: "Dr. Prasad",
     groomFullName: "Dr. Prasad",
     groomQualification: "B.H.M.S.",
-    groomParents: "Son of Mrs. Asha & Mr. Sanjay Bhikari Patil Godge",
+    groomParents: "Son of Mrs. Asha & Mr. Sanjay Bhikahari Patil Godage",
     groomAddress: "Chincholi Gurav, Sangamner, Ahilyanagar",
     brideName: "Samiksha",
     brideFullName: "Samiksha",
@@ -80,12 +80,12 @@ export const weddingData = {
 
   family: {
     heading: "Invitees",
-    mainLine: "Godge Patil Family & Relatives",
+    mainLine: "Godage Patil Family & Relatives",
     members: [
-      { name: "Mr. Babasaheb Bhikari Patil Godage", phone: "" },
-      { name: "Mr. Sanjay Bhikari Patil Godage", phone: "" },
-      { name: "Mr. Annasaheb Bhikari Patil Godage", phone: "" },
-      { name: "Mr. Bapusaheb Bhikari Patil Godage", phone: "" },
+      { name: "Mr. Babasaheb Bhikahari Patil Godage", phone: "" },
+      { name: "Mr. Sanjay Bhikahari Patil Godage", phone: "" },
+      { name: "Mr. Annasaheb Bhikahari Patil Godage", phone: "" },
+      { name: "Mr. Bapusaheb Bhikahari Patil Godage", phone: "" },
       { name: "Omkar Sanjay Godage", phone: "" },
     ],
   },
