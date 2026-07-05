@@ -15,6 +15,14 @@ const PhotoStack = () => {
     images[4] || '/images/placeholder5.jpg',
   ];
 
+  const subtitles = [
+    "Beautiful Moments",
+    "Together Forever",
+    "Joy & Laughter",
+    "Endless Love",
+    "A New Journey"
+  ];
+
   const [activeIndex, setActiveIndex] = useState(0);
   const [lightboxImg, setLightboxImg] = useState(null);
   const [isPaused, setIsPaused] = useState(false);
@@ -28,13 +36,13 @@ const PhotoStack = () => {
     return () => clearTimeout(timer);
   }, []);
 
-  // Auto-rotate logic (slowed down as requested: 5.5s to 7s interval)
+  // Auto-rotate logic (changed every 3s as requested)
   useEffect(() => {
     if (prefersReducedMotion || isPaused || lightboxImg) return;
     
     const interval = setInterval(() => {
       setActiveIndex((prev) => (prev + 1) % displayImages.length);
-    }, 6000); // 6s auto rotation
+    }, 3000); // 3s auto rotation
     
     return () => clearInterval(interval);
   }, [isPaused, lightboxImg, prefersReducedMotion, displayImages.length]);
@@ -205,8 +213,8 @@ const PhotoStack = () => {
                 viewport={{ once: true, margin: '-50px' }}
                 animate={hasEntered ? animate : undefined}
                 transition={{
-                  duration: 2.6, // Slow 2.6s transition as requested
-                  ease: [0.22, 1, 0.36, 1], // Exactly matching reference easing
+                  duration: 1.8, // Faster 1.8s transition to fit 3s interval
+                  ease: [0.22, 1, 0.36, 1],
                   delay: !hasEntered ? index * 0.45 : 0 
                 }}
                 onClick={() => handleCardClick(index, diff)}
@@ -227,6 +235,22 @@ const PhotoStack = () => {
                     loading={isFront ? "eager" : "lazy"}
                   />
                 </div>
+                {/* Subtitle */}
+                <p 
+                  style={{ 
+                    position: 'absolute', 
+                    bottom: '8px', 
+                    left: 0, 
+                    right: 0, 
+                    textAlign: 'center',
+                    fontFamily: 'var(--font-lora)',
+                    fontStyle: 'italic',
+                    fontSize: '1rem',
+                    color: 'var(--color-sage-dark)'
+                  }}
+                >
+                  {subtitles[index]}
+                </p>
               </motion.div>
             );
           })}
