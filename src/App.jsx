@@ -15,6 +15,7 @@ import FamilySection from './components/FamilySection.jsx';
 import Footer from './components/Footer.jsx';
 import MusicButton from './components/MusicButton.jsx';
 import FloatingActions from './components/FloatingActions.jsx';
+import ScrollingGallery from './components/ScrollingGallery.jsx';
 
 import { weddingData } from './data/index.js';
 
@@ -83,6 +84,7 @@ function App() {
           {/* Sections */}
           <main>
             <HeroSection />
+            <ScrollingGallery />
             <SaveTheDate />
             <CountdownTimer />
             <CoupleSection />
