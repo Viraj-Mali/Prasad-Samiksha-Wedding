@@ -244,7 +244,7 @@ const OpeningEnvelopeScreen = ({ onEnter }) => {
                   <motion.div
                     exit={{ opacity: 0, scale: 1.2, filter: 'blur(4px)' }}
                     transition={{ duration: 0.5 }}
-                    style={{ position: 'absolute', bottom: -55, left: '50%', transform: 'translateX(-50%)' }}
+                    style={{ position: 'absolute', bottom: -20, left: '50%', transform: 'translateX(-50%)' }}
                   >
                     <button 
                       onClick={handleClick}
