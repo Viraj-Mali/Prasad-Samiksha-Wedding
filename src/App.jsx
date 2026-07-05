@@ -83,10 +83,10 @@ function App() {
           {/* Sections */}
           <main>
             <HeroSection />
-            <PhotoStack />
             <SaveTheDate />
             <CountdownTimer />
             <CoupleSection />
+            <PhotoStack />
             <EventDetails />
             <InvitationMessage />
             <VenueSection />
