@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X } from 'lucide-react';
 import { weddingData } from '../data/index.js';
@@ -12,9 +12,9 @@ const PhotoCard = ({ src, alt, rotation = 0, style = {}, onClick, isMain = false
       onClick={onClick}
       style={{
         background: '#fff',
-        padding: isMain ? '12px 12px 36px 12px' : '8px 8px 24px 8px',
-        boxShadow: '0 12px 30px rgba(44,24,16,0.12)',
-        borderRadius: 4,
+        padding: isMain ? '10px 10px 32px 10px' : '8px 8px 24px 8px', // reduced white border thickness
+        boxShadow: isMain ? '0 20px 40px rgba(44,24,16,0.15)' : '0 12px 30px rgba(44,24,16,0.1)',
+        borderRadius: 6,
         cursor: onClick ? 'pointer' : 'default',
         transform: `rotate(${rotation}deg)`,
         position: 'relative',
@@ -24,15 +24,15 @@ const PhotoCard = ({ src, alt, rotation = 0, style = {}, onClick, isMain = false
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-50px' }}
       transition={{ duration: 0.8, ease: "easeOut" }}
-      whileHover={{ scale: 1.03, zIndex: 30, transition: { duration: 0.3 } }}
+      whileHover={{ scale: 1.03, zIndex: 40, transition: { duration: 0.3 } }}
     >
-      <div style={{ width: '100%', height: '100%', background: '#F8F5F0', overflow: 'hidden', borderRadius: 2 }}>
+      <div style={{ width: '100%', height: '100%', background: '#F8F5F0', overflow: 'hidden', borderRadius: 4 }}>
         {!error ? (
           <img 
             src={src} 
             alt={alt} 
             onError={() => setError(true)}
-            style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
+            style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center' }} 
             loading="lazy"
           />
         ) : (
@@ -51,7 +51,6 @@ const PhotoStack = () => {
   const { assets } = weddingData;
   const images = assets.galleryImages || [];
   
-  // Make sure we have at least 3 images for mobile, 5 for desktop layout
   const displayImages = [
     images[0] || '/images/placeholder1.jpg',
     images[1] || '/images/placeholder2.jpg',
@@ -64,16 +63,27 @@ const PhotoStack = () => {
 
   // Floral Corner SVG
   const FloralCorner = ({ style }) => (
-    <svg width="80" height="80" viewBox="0 0 100 100" fill="none" style={{ position: 'absolute', opacity: 0.4, ...style }}>
-      <path d="M10 10 Q40 10 60 40 Q40 60 10 90 Q30 50 10 10" stroke="#C9A84C" strokeWidth="1.5" />
-      <circle cx="60" cy="40" r="3" fill="#C9A84C" />
-      <circle cx="45" cy="55" r="2" fill="#C9A84C" />
+    <svg width="100" height="100" viewBox="0 0 100 100" fill="none" style={{ position: 'absolute', opacity: 0.5, ...style }}>
+      <path d="M10 10 Q40 10 60 40 Q40 60 10 90 Q30 50 10 10" stroke="#C9A84C" strokeWidth="1.2" />
+      <circle cx="60" cy="40" r="3" fill="#C9A84C" opacity="0.8"/>
+      <circle cx="45" cy="55" r="2" fill="#C9A84C" opacity="0.6"/>
+      <path d="M20 20 Q50 20 70 50 Q50 70 20 100 Q40 60 20 20" stroke="#8A9A86" strokeWidth="0.8" opacity="0.6"/>
     </svg>
   );
 
   return (
-    <section className="py-24 px-4 overflow-hidden relative" style={{ background: 'linear-gradient(180deg, #FDF9F2 0%, #EBF0EB 100%)' }}>
+    <section className="pt-24 px-4 overflow-hidden relative" style={{ 
+      background: 'linear-gradient(180deg, #FDF9F2 0%, #E8EFE8 100%)',
+      paddingBottom: '160px' // Breathing space for floating buttons
+    }}>
       
+      {/* Subtle Background Glow & Texture */}
+      <div style={{
+        position: 'absolute', inset: 0,
+        background: 'radial-gradient(circle at center, rgba(255,255,255,0.6) 0%, transparent 60%)',
+        pointerEvents: 'none', zIndex: 0
+      }} />
+
       {/* Floral Corners */}
       <FloralCorner style={{ top: 20, left: 20 }} />
       <FloralCorner style={{ top: 20, right: 20, transform: 'scaleX(-1)' }} />
@@ -84,60 +94,66 @@ const PhotoStack = () => {
       <motion.div
         initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }} transition={{ duration: 0.9 }}
-        style={{ textAlign: 'center', marginBottom: 56, position: 'relative', zIndex: 10 }}
+        style={{ textAlign: 'center', marginBottom: 64, position: 'relative', zIndex: 10 }}
       >
-        <p style={{ fontFamily: 'var(--font-lora)', textTransform: 'uppercase',
-          letterSpacing: '0.4em', fontSize: 11, color: 'var(--color-gold-deep)', marginBottom: 12 }}>
-          Our Memories
-        </p>
-        <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(2.5rem, 7vw, 3.5rem)',
+        {/* Small gold divider above heading */}
+        <div className="flex items-center justify-center gap-4 mb-6">
+          <div style={{ height: 1, width: 40, background: 'linear-gradient(90deg, transparent, var(--color-gold))' }} />
+          <span style={{ color: 'var(--color-gold)', fontSize: 14 }}>✧</span>
+          <div style={{ height: 1, width: 40, background: 'linear-gradient(-90deg, transparent, var(--color-gold))' }} />
+        </div>
+
+        <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(2.5rem, 8vw, 3.8rem)',
           color: 'var(--color-choco)', fontWeight: 400, margin: 0 }}>
           Forever Moments
         </h2>
-        <div className="flex items-center justify-center gap-4 mt-6">
-          <div style={{ height: 1, width: 60, background: 'linear-gradient(90deg, transparent, var(--color-gold))' }} />
-          <span style={{ color: 'var(--color-gold)', fontSize: 18 }}>✧</span>
-          <div style={{ height: 1, width: 60, background: 'linear-gradient(-90deg, transparent, var(--color-gold))' }} />
-        </div>
+        
+        <p style={{ fontFamily: 'var(--font-lora)', fontStyle: 'italic',
+          fontSize: 'clamp(1rem, 3.5vw, 1.2rem)', color: 'var(--color-sage-dark)', marginTop: 12 }}>
+          A few memories from our beautiful journey.
+        </p>
       </motion.div>
 
       {/* MOBILE LAYOUT */}
-      <div className="flex md:hidden flex-col items-center relative" style={{ height: 480, width: '100%', maxWidth: 400, margin: '0 auto' }}>
-        <PhotoCard 
-          src={displayImages[0]} alt="Gallery Main" rotation={-3} isMain={true} onClick={() => setLightboxImg(displayImages[0])}
-          style={{ position: 'absolute', top: 0, width: '72%', height: 320, zIndex: 10 }} 
-        />
+      <div className="flex md:hidden relative w-full justify-center" style={{ minHeight: 460, marginTop: 20, zIndex: 10 }}>
+        {/* Back card 1 */}
         <PhotoCard 
           src={displayImages[1]} alt="Gallery Sub 1" rotation={-10} onClick={() => setLightboxImg(displayImages[1])}
-          style={{ position: 'absolute', top: 220, left: '2%', width: '52%', height: 200, zIndex: 5 }} 
+          style={{ position: 'absolute', top: 130, left: '6vw', width: '60vw', height: '65vw', zIndex: 5 }} 
         />
+        {/* Back card 2 */}
         <PhotoCard 
-          src={displayImages[2]} alt="Gallery Sub 2" rotation={8} onClick={() => setLightboxImg(displayImages[2])}
-          style={{ position: 'absolute', top: 190, right: '2%', width: '56%', height: 230, zIndex: 6 }} 
+          src={displayImages[2]} alt="Gallery Sub 2" rotation={12} onClick={() => setLightboxImg(displayImages[2])}
+          style={{ position: 'absolute', top: 160, right: '4vw', width: '62vw', height: '68vw', zIndex: 6 }} 
+        />
+        {/* Main card */}
+        <PhotoCard 
+          src={displayImages[0]} alt="Gallery Main" rotation={-2} isMain={true} onClick={() => setLightboxImg(displayImages[0])}
+          style={{ position: 'relative', width: '84vw', height: '90vw', zIndex: 10, margin: '0 auto' }} 
         />
       </div>
 
       {/* DESKTOP LAYOUT (Masonry / Staggered) */}
-      <div className="hidden md:flex flex-wrap justify-center items-start gap-8 relative" style={{ maxWidth: 1100, margin: '0 auto', padding: '0 40px' }}>
+      <div className="hidden md:flex flex-wrap justify-center items-center gap-8 relative z-10" style={{ maxWidth: 1200, margin: '0 auto', padding: '0 40px' }}>
         <PhotoCard 
-          src={displayImages[1]} alt="Gallery 2" rotation={-4} onClick={() => setLightboxImg(displayImages[1])}
-          style={{ width: 260, height: 320, marginTop: 40 }}
+          src={displayImages[1]} alt="Gallery 2" rotation={-5} onClick={() => setLightboxImg(displayImages[1])}
+          style={{ width: 280, height: 340, marginTop: 40 }}
         />
         <PhotoCard 
-          src={displayImages[0]} alt="Gallery 1" rotation={2} isMain={true} onClick={() => setLightboxImg(displayImages[0])}
-          style={{ width: 320, height: 400, marginTop: 0 }}
+          src={displayImages[0]} alt="Gallery 1" rotation={3} isMain={true} onClick={() => setLightboxImg(displayImages[0])}
+          style={{ width: 380, height: 460, marginTop: 0 }}
         />
         <PhotoCard 
-          src={displayImages[2]} alt="Gallery 3" rotation={-2} onClick={() => setLightboxImg(displayImages[2])}
-          style={{ width: 280, height: 350, marginTop: 70 }}
+          src={displayImages[2]} alt="Gallery 3" rotation={-4} onClick={() => setLightboxImg(displayImages[2])}
+          style={{ width: 270, height: 330, marginTop: 70 }}
         />
         <PhotoCard 
-          src={displayImages[3]} alt="Gallery 4" rotation={5} onClick={() => setLightboxImg(displayImages[3])}
-          style={{ width: 250, height: 300, marginTop: 20 }}
+          src={displayImages[3]} alt="Gallery 4" rotation={8} onClick={() => setLightboxImg(displayImages[3])}
+          style={{ width: 260, height: 320, marginTop: -20 }}
         />
         <PhotoCard 
           src={displayImages[4]} alt="Gallery 5" rotation={-3} onClick={() => setLightboxImg(displayImages[4])}
-          style={{ width: 290, height: 370, marginTop: 50 }}
+          style={{ width: 290, height: 350, marginTop: 20 }}
         />
       </div>
 
@@ -146,8 +162,8 @@ const PhotoStack = () => {
         {lightboxImg && (
           <motion.div 
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4"
-            style={{ background: 'rgba(0,0,0,0.85)', backdropFilter: 'blur(4px)' }}
+            className="fixed inset-0 flex items-center justify-center p-4"
+            style={{ background: 'rgba(0,0,0,0.85)', backdropFilter: 'blur(4px)', zIndex: 9999 }}
             onClick={() => setLightboxImg(null)}
           >
             <button 
@@ -159,7 +175,7 @@ const PhotoStack = () => {
             <motion.div
               initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.9, opacity: 0 }}
               transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-              style={{ background: '#fff', padding: '12px 12px 40px 12px', borderRadius: 4 }}
+              style={{ background: '#fff', padding: '12px 12px 40px 12px', borderRadius: 6 }}
               onClick={(e) => e.stopPropagation()}
             >
               <img 
